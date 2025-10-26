@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-demo
+  namespace: argocd         # ต้องอยู่ใน namespace ที่ติดตั้ง Argo CD
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/kong-chanapon/k8s-demo.git
+    targetRevision: main
+    path: .                 # โฟลเดอร์ใน repo ที่มีไฟล์ manifests (deployment.yaml, service.yaml, ingress.yaml)
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default      # ให้ deploy มาที่ namespace นี้
+  syncPolicy:
+    automated:
+      prune: true           # ลบ resource ที่ไม่มีใน Git ออก
+      selfHeal: true        # ถ้ามีใครไปแก้ cluster ตรง ๆ ให้ Argo sync กลับเอง
+    syncOptions:
+      - CreateNamespace=true
