@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/kong-chanapon/k8s-demo.git
-    targetRevision: main
+    targetRevision: HEAD
     path: ./nginx-chart
     helm:
       releaseName: nginx-demo
