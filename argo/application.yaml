@@ -8,13 +8,15 @@ spec:
   source:
     repoURL: https://github.com/kong-chanapon/k8s-demo.git
     targetRevision: main
-    path: app              # << ชี้มาที่โฟลเดอร์ app
+    path: nginx-chart
+    helm:
+      releaseName: nginx-demo
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: default
   syncPolicy:
     automated:
-      prune: true          # ลบของที่ไม่อยู่ใน Git
-      selfHeal: true       # ใครไปแก้ในคลัสเตอร์ตรง ๆ ให้ซิงค์กลับอัตโนมัติ
-    syncOptions:
-      - CreateNamespace=true
+      prune: true
+      selfHeal: true
