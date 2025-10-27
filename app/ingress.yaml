@@ -2,11 +2,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nginx
-  namespace: default
 spec:
   ingressClassName: nginx
   rules:
-  - host: localhost           # หรือจะใช้ nginx.local ก็ได้
+  - host: localhost
     http:
       paths:
       - path: /

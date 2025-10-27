@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-demo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/kong-chanapon/k8s-demo.git
+    targetRevision: main
+    path: app              # << ชี้มาที่โฟลเดอร์ app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true          # ลบของที่ไม่อยู่ใน Git
+      selfHeal: true       # ใครไปแก้ในคลัสเตอร์ตรง ๆ ให้ซิงค์กลับอัตโนมัติ
+    syncOptions:
+      - CreateNamespace=true
